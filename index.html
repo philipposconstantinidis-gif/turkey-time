@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turkey Cooking Time Calculator — Roast Beef, Chicken, Lamb, Pork & Gammon</title>
+    <meta name="description" content="Calculate exact cooking times for any roast. Turkey cooking time, roast beef cooking time, leg of lamb, chicken, pork and gammon — by weight, with rest times and oven temperatures.">
+    <meta name="keywords" content="turkey cooking time, roast beef cooking time, leg of lamb cooking time, turkey crown cooking time, roast chicken cooking time, roast pork cooking time, roast lamb cooking time, gammon cooking time, beef cooking times, chicken cooking time, cooking time for a roast beef, roast cooking time calculator, roast beef cooking time calculator">
+    <link rel="canonical" href="">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #FAFAFA;
+            --surface: #FFFFFF;
+            --text: #18181B;
+            --text-soft: #71717A;
+            --text-muted: #A1A1AA;
+            --accent: #C2410C;
+            --accent-hover: #9A3412;
+            --accent-soft: #FFF7ED;
+            --border: #E4E4E7;
+            --border-strong: #D4D4D8;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            font-feature-settings: "cv11", "ss01";
+        }
+
+        nav {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 24px 24px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        nav .brand {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        nav .brand-mark {
+            width: 22px;
+            height: 22px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        nav .meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .ad-slot {
+            display: none;
+            max-width: 880px;
+            margin: 0 auto 8px;
+            padding: 0 24px;
+        }
+        .ad-slot-inner {
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            padding: 18px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 56px 24px 36px;
+        }
+        .hero .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-soft);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+        .hero .badge-dot {
+            width: 6px; height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.2px;
+            margin-bottom: 16px;
+            max-width: 740px;
+        }
+        .hero h1 .accent { color: var(--accent); }
+        .hero p {
+            font-size: 16px;
+            color: var(--text-soft);
+            max-width: 600px;
+            line-height: 1.65;
+        }
+
+        /* ── CALCULATOR ── */
+        .calc-section {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 16px 24px;
+        }
+        .calc-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .calc-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .calc-header h2 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .calc-header .info-tag {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .calc-body { padding: 28px; }
+
+        /* ── MEAT SELECTOR ── */
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-soft);
+            margin-bottom: 10px;
+        }
+
+        .meat-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+        .meat-btn {
+            padding: 14px 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1.5px solid var(--border-strong);
+            border-radius: 10px;
+            cursor: pointer;
+            background: var(--surface);
+            color: var(--text-soft);
+            transition: all 0.15s;
+            text-align: center;
+        }
+        .meat-btn:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+        .meat-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* ── INPUT ROW ── */
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-soft);
+            margin-bottom: 8px;
+        }
+        .input-wrap {
+            position: relative;
+        }
+        .input-wrap input,
+        .input-wrap select {
+            width: 100%;
+            padding: 14px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--surface);
+            border: 1.5px solid var(--border-strong);
+            border-radius: 10px;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            -moz-appearance: textfield;
+        }
+        .input-wrap input::-webkit-outer-spin-button,
+        .input-wrap input::-webkit-inner-spin-button {
+            -webkit-appearance: none; margin: 0;
+        }
+        .input-wrap select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2371717A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+        .input-wrap input:focus,
+        .input-wrap select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+        .input-wrap .unit-suffix {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .unit-toggle {
+            display: inline-flex;
+            gap: 6px;
+            padding: 4px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .unit-toggle button {
+            padding: 6px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-soft);
+            transition: all 0.15s;
+        }
+        .unit-toggle button.active {
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        /* ── RESULTS GRID ── */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .res-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px 18px;
+            text-align: center;
+        }
+        .res-card.primary {
+            background: var(--accent-soft);
+            border-color: var(--accent);
+        }
+        .res-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .res-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .res-card.primary .res-value { color: var(--accent); }
+        .res-value .unit {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-left: 2px;
+        }
+        .res-detail {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .tip-bar {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: var(--accent-soft);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+        }
+        .tip-bar .tip-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .tip-bar p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── INFO ── */
+        .info-section {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 16px 24px 48px;
+        }
+        .info-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 36px;
+        }
+        .info-card h2 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        .info-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 24px 0 8px;
+        }
+        .info-card p {
+            color: var(--text-soft);
+            font-size: 14px;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 8px;
+            font-size: 13px;
+        }
+        .ref-table th {
+            background: var(--bg);
+            padding: 12px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .ref-table td {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-soft);
+        }
+        .ref-table tr:last-child td { border-bottom: none; }
+        .ref-table .meat-name {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .faq-item summary {
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 16px 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+        .faq-item[open] summary { border-bottom-color: var(--accent); }
+        .faq-item summary::-webkit-details-summary { display: none; }
+        .faq-item summary::before {
+            content: '+';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px; height: 22px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+            border-radius: 6px;
+        }
+        .faq-item[open] summary::before {
+            content: '−';
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .faq-item .faq-answer {
+            padding: 12px 0 16px 34px;
+            color: var(--text-soft);
+            font-size: 14px;
+            line-height: 1.7;
+            border-bottom: 1px solid var(--border);
+        }
+
+        footer {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 700px) {
+            .calc-header, .calc-body { padding-left: 22px; padding-right: 22px; }
+            .meat-grid { grid-template-columns: repeat(4, 1fr); }
+            .input-row { grid-template-columns: 1fr; }
+            .results-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .info-card { padding: 26px; }
+            .ref-table th, .ref-table td { padding: 10px 12px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <span class="brand">
+        <span class="brand-mark">🍗</span>
+        RoastTime
+    </span>
+    <span class="meta">Cooking Time Calculator</span>
+</nav>
+
+<div class="ad-slot"><div class="ad-slot-inner">Ad Space</div></div>
+
+<section class="hero">
+    <div class="badge"><span class="badge-dot"></span>Free Calculator</div>
+    <h1><span class="accent">Roast cooking times</span> for turkey, beef, chicken & more</h1>
+    <p>Calculate exact cooking times by weight for turkey, roast beef, chicken, lamb, pork and gammon. Get oven temperature, total cooking time and rest time — all instantly.</p>
+</section>
+
+<section class="calc-section">
+    <div class="calc-card">
+        <div class="calc-header">
+            <h2>Cooking Time Calculator</h2>
+            <span class="info-tag">Pick your meat, enter the weight</span>
+        </div>
+        <div class="calc-body">
+
+            <div class="section-label">Choose your meat</div>
+            <div class="meat-grid" id="meat-grid">
+                <button class="meat-btn active" onclick="setMeat('turkey')">Turkey</button>
+                <button class="meat-btn" onclick="setMeat('turkeycrown')">Turkey Crown</button>
+                <button class="meat-btn" onclick="setMeat('chicken')">Chicken</button>
+                <button class="meat-btn" onclick="setMeat('beef')">Beef</button>
+                <button class="meat-btn" onclick="setMeat('lamb')">Lamb</button>
+                <button class="meat-btn" onclick="setMeat('pork')">Pork</button>
+                <button class="meat-btn" onclick="setMeat('gammon')">Gammon</button>
+            </div>
+
+            <div class="unit-toggle">
+                <button class="active" onclick="setUnit('kg')" id="btn-kg">Kilograms</button>
+                <button onclick="setUnit('lb')" id="btn-lb">Pounds</button>
+            </div>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Weight</label>
+                    <div class="input-wrap">
+                        <input type="number" id="weight" value="4" min="0.1" step="0.1" oninput="calculate()">
+                        <span class="unit-suffix" id="weight-unit">kg</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Doneness</label>
+                    <div class="input-wrap">
+                        <select id="doneness" onchange="calculate()">
+                            <option value="rare">Rare</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="welldone">Well Done</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Oven Type</label>
+                    <div class="input-wrap">
+                        <select id="ovenType" onchange="calculate()">
+                            <option value="conventional">Conventional</option>
+                            <option value="fan">Fan Oven</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <div class="res-card primary">
+                    <div class="res-label">Total Cooking Time</div>
+                    <div class="res-value" id="res-time">2h 40m</div>
+                    <div class="res-detail">in the oven</div>
+                </div>
+                <div class="res-card">
+                    <div class="res-label">Oven Temperature</div>
+                    <div class="res-value" id="res-temp">180<span class="unit">°C</span></div>
+                    <div class="res-detail" id="res-temp-detail">gas mark 4</div>
+                </div>
+                <div class="res-card">
+                    <div class="res-label">Rest Time</div>
+                    <div class="res-value" id="res-rest">30<span class="unit">min</span></div>
+                    <div class="res-detail">before carving</div>
+                </div>
+            </div>
+
+            <div class="tip-bar">
+                <div class="tip-label">Cooking tip</div>
+                <p id="tip-text">Cover the turkey with foil for the first two-thirds of cooking, then remove the foil for the final 30-45 minutes to crisp up the skin. Baste every 30 minutes for the juiciest result.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="ad-slot" style="padding-top:24px;"><div class="ad-slot-inner">Ad Space</div></div>
+
+<section class="info-section">
+    <div class="info-card">
+        <h2>Cooking Time Reference Chart</h2>
+        <p>Use the calculator above for exact times based on your specific weight, or refer to this general guide for cooking times per kilogram. All times assume the meat is fully thawed and at room temperature before going in the oven.</p>
+
+        <table class="ref-table">
+            <thead>
+                <tr>
+                    <th>Meat</th>
+                    <th>Oven Temp</th>
+                    <th>Time per kg</th>
+                    <th>Rest Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="meat-name">Turkey (whole)</td><td>180°C / Gas 4</td><td>40 min/kg + 20 min</td><td>30 min</td></tr>
+                <tr><td class="meat-name">Turkey Crown</td><td>190°C / Gas 5</td><td>40 min/kg + 20 min</td><td>20 min</td></tr>
+                <tr><td class="meat-name">Whole Chicken</td><td>200°C / Gas 6</td><td>45 min/kg + 20 min</td><td>15 min</td></tr>
+                <tr><td class="meat-name">Beef (medium)</td><td>180°C / Gas 4</td><td>25 min/kg + 25 min</td><td>20 min</td></tr>
+                <tr><td class="meat-name">Lamb (medium)</td><td>180°C / Gas 4</td><td>25 min/kg + 25 min</td><td>20 min</td></tr>
+                <tr><td class="meat-name">Pork</td><td>180°C / Gas 4</td><td>35 min/kg + 30 min</td><td>20 min</td></tr>
+                <tr><td class="meat-name">Gammon</td><td>180°C / Gas 4</td><td>30 min/kg + 30 min</td><td>15 min</td></tr>
+            </tbody>
+        </table>
+
+        <h2 style="margin-top:32px;">How to Get a Perfect Roast Every Time</h2>
+
+        <h3>Bring the meat to room temperature</h3>
+        <p>Take your roast out of the fridge 30-60 minutes before cooking (longer for larger joints). Cooking cold meat straight from the fridge means the outside will overcook before the centre is done. This single step is the most common mistake home cooks make.</p>
+
+        <h3>Use a meat thermometer</h3>
+        <p>The most reliable way to check if a roast is done is with an instant-read meat thermometer. Stick it into the thickest part of the meat, avoiding bone. Target internal temperatures: <strong>chicken and turkey 75°C</strong>, <strong>beef rare 50°C / medium 60°C / well done 70°C</strong>, <strong>lamb medium 60°C</strong>, <strong>pork 70°C</strong>, <strong>gammon 70°C</strong>.</p>
+
+        <h3>Always rest your meat</h3>
+        <p>When meat cooks, the juices migrate to the centre. Resting lets them redistribute throughout the meat, so when you carve it, the juices stay in the meat instead of pouring out onto the chopping board. Rest small joints (chicken) for 10-15 minutes, larger joints (turkey, big beef roasts) for 20-30 minutes. Cover loosely with foil to keep warm.</p>
+
+        <h3>Trust the calculator, not the clock</h3>
+        <p>Cooking times are estimates — every oven is different, every joint of meat is slightly different in shape. Always start checking 15-20 minutes before the calculated end time, especially for smaller cuts. A meat thermometer is more accurate than any timer.</p>
+
+        <h2 style="margin-top:32px;">Frequently Asked Questions</h2>
+
+        <details class="faq-item">
+            <summary>How long do you cook a turkey per kg?</summary>
+            <div class="faq-answer">For a whole turkey, cook for 40 minutes per kilogram at 180°C (gas mark 4), plus an extra 20 minutes. So a 5kg turkey takes about 3 hours 40 minutes total. Always rest for at least 30 minutes before carving. Use a meat thermometer to confirm the internal temperature reaches 75°C in the thickest part of the breast.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How long to cook a roast beef?</summary>
+            <div class="faq-answer">Roast beef cooking time depends on how well done you want it. At 180°C (gas mark 4): for rare, cook for 20 minutes per kg + 20 minutes; for medium, 25 minutes per kg + 25 minutes; for well done, 30 minutes per kg + 30 minutes. Always rest for at least 20 minutes before carving.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How long does a turkey crown take to cook?</summary>
+            <div class="faq-answer">A turkey crown cooks faster than a whole turkey because there are no legs or cavity to slow down heat penetration. Cook at 190°C (gas mark 5) for 40 minutes per kilogram plus 20 minutes. A 2.5kg turkey crown takes about 2 hours. Rest for 20 minutes before carving.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How long to cook a leg of lamb?</summary>
+            <div class="faq-answer">For a leg of lamb at 180°C (gas mark 4): rare needs 20 minutes per kg + 20 minutes; medium needs 25 minutes per kg + 25 minutes; well done needs 30 minutes per kg + 30 minutes. A 2kg leg of lamb (medium) takes about 1 hour 15 minutes. Always rest for 20 minutes before carving.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How long to cook a roast chicken?</summary>
+            <div class="faq-answer">Roast a whole chicken at 200°C (gas mark 6) for 45 minutes per kilogram, plus 20 minutes. A standard 1.5kg chicken takes about 1 hour 30 minutes. The chicken is cooked when the juices run clear from the thickest part of the thigh, or when an instant-read thermometer shows 75°C. Rest for 15 minutes before carving.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How long does pork take to cook per kg?</summary>
+            <div class="faq-answer">Roast pork takes 35 minutes per kilogram at 180°C (gas mark 4), plus an extra 30 minutes. A 1.5kg pork joint takes about 1 hour 20 minutes. For crackling, increase the heat to 220°C (gas mark 7) for the first 30 minutes, then reduce to 180°C for the remaining time. Pork should reach an internal temperature of 70°C.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How long to cook gammon per kg?</summary>
+            <div class="faq-answer">Gammon takes about 30 minutes per kilogram at 180°C (gas mark 4), plus 30 minutes. A 2kg gammon joint takes about 1 hour 30 minutes. Many cooks boil gammon first for the same time, then finish in the oven with a glaze for the last 20-30 minutes. Always check the packaging — some gammons need soaking overnight to remove excess salt.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>Why do I need to rest meat after cooking?</summary>
+            <div class="faq-answer">Resting allows the muscle fibres to relax and reabsorb the juices that have been pushed to the centre during cooking. Without resting, those juices spill out the moment you cut into the meat, leaving it dry. Resting also makes carving much easier because the meat firms up slightly. As a rule, larger joints need longer rest times — 10-15 minutes for chicken, 20-30 minutes for turkey or large beef joints.</div>
+        </details>
+
+        <details class="faq-item">
+            <summary>What's the best oven temperature for roasting?</summary>
+            <div class="faq-answer">For most roasts, 180°C (gas mark 4) is the sweet spot — hot enough to brown the outside but gentle enough to cook the inside evenly without drying it out. Chicken and turkey crown benefit from slightly higher heat (190-200°C / gas mark 5-6) for crisper skin. For pork crackling or beef searing, start at 220°C (gas mark 7) for 20-30 minutes then reduce to 180°C.</div>
+        </details>
+    </div>
+</section>
+
+<div class="ad-slot" style="margin-bottom:16px;"><div class="ad-slot-inner">Ad Space</div></div>
+
+<footer>&copy; 2026 RoastTime · Free roast cooking time calculator</footer>
+
+<script>
+const MEATS = {
+    turkey: {
+        name: 'Turkey',
+        rare:    { perKg: 35, base: 20 },
+        medium:  { perKg: 40, base: 20 },
+        welldone:{ perKg: 45, base: 25 },
+        temp: 180, gas: 4, rest: 30,
+        tip: 'Cover the turkey with foil for the first two-thirds of cooking, then remove the foil for the final 30-45 minutes to crisp up the skin. Baste every 30 minutes for the juiciest result.'
+    },
+    turkeycrown: {
+        name: 'Turkey Crown',
+        rare:    { perKg: 35, base: 20 },
+        medium:  { perKg: 40, base: 20 },
+        welldone:{ perKg: 45, base: 25 },
+        temp: 190, gas: 5, rest: 20,
+        tip: 'A turkey crown cooks faster than a whole bird because there\'s no cavity. Brush with melted butter before cooking and again halfway through. Internal temperature should reach 75°C.'
+    },
+    chicken: {
+        name: 'Whole Chicken',
+        rare:    { perKg: 40, base: 15 },
+        medium:  { perKg: 45, base: 20 },
+        welldone:{ perKg: 50, base: 25 },
+        temp: 200, gas: 6, rest: 15,
+        tip: 'For crispy skin, pat the chicken dry with kitchen paper before cooking and rub with oil and salt. Roast breast-side up. The chicken is done when juices run clear from the thigh.'
+    },
+    beef: {
+        name: 'Beef',
+        rare:    { perKg: 20, base: 20 },
+        medium:  { perKg: 25, base: 25 },
+        welldone:{ perKg: 30, base: 30 },
+        temp: 180, gas: 4, rest: 20,
+        tip: 'For a perfect crust, sear the beef in a hot pan on all sides before roasting. Use a meat thermometer — for rare aim for 50°C internal, medium 60°C, well done 70°C. Rest under foil before carving.'
+    },
+    lamb: {
+        name: 'Lamb',
+        rare:    { perKg: 20, base: 20 },
+        medium:  { perKg: 25, base: 25 },
+        welldone:{ perKg: 30, base: 30 },
+        temp: 180, gas: 4, rest: 20,
+        tip: 'Lamb is best served pink (medium). Stud the meat with garlic and rosemary before roasting for classic flavour. Internal temp for medium is 60°C. Always rest before carving.'
+    },
+    pork: {
+        name: 'Pork',
+        rare:    { perKg: 30, base: 25 },
+        medium:  { perKg: 35, base: 30 },
+        welldone:{ perKg: 40, base: 30 },
+        temp: 180, gas: 4, rest: 20,
+        tip: 'For perfect crackling, score the skin deeply, rub with oil and salt, and start at 220°C (gas 7) for 30 minutes before reducing to 180°C. Pork should reach 70°C internal temperature.'
+    },
+    gammon: {
+        name: 'Gammon',
+        rare:    { perKg: 25, base: 25 },
+        medium:  { perKg: 30, base: 30 },
+        welldone:{ perKg: 35, base: 30 },
+        temp: 180, gas: 4, rest: 15,
+        tip: 'For glazed gammon, boil first for the calculated time minus 30 minutes, then transfer to the oven with a brown sugar and mustard glaze for the final 30 minutes at 200°C.'
+    }
+};
+
+let currentMeat = 'turkey';
+let currentUnit = 'kg';
+
+function setMeat(meat) {
+    currentMeat = meat;
+    document.querySelectorAll('.meat-btn').forEach(b => b.classList.remove('active'));
+    event.target.closest('.meat-btn').classList.add('active');
+    calculate();
+}
+
+function setUnit(unit) {
+    if (unit === currentUnit) return;
+    const weightInput = document.getElementById('weight');
+    const current = parseFloat(weightInput.value) || 0;
+
+    if (unit === 'lb') {
+        weightInput.value = (current * 2.20462).toFixed(1);
+        document.getElementById('weight-unit').textContent = 'lb';
+    } else {
+        weightInput.value = (current / 2.20462).toFixed(1);
+        document.getElementById('weight-unit').textContent = 'kg';
+    }
+    currentUnit = unit;
+    document.getElementById('btn-kg').classList.toggle('active', unit === 'kg');
+    document.getElementById('btn-lb').classList.toggle('active', unit === 'lb');
+    calculate();
+}
+
+function formatTime(mins) {
+    if (mins < 60) return mins + 'm';
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    if (m === 0) return h + 'h';
+    return h + 'h ' + m + 'm';
+}
+
+function calculate() {
+    let weight = parseFloat(document.getElementById('weight').value) || 0;
+    if (currentUnit === 'lb') weight = weight / 2.20462;
+
+    const doneness = document.getElementById('doneness').value;
+    const ovenType = document.getElementById('ovenType').value;
+    const meat = MEATS[currentMeat];
+    const data = meat[doneness];
+
+    let totalMins = Math.round(weight * data.perKg + data.base);
+    // Fan ovens cook ~10% faster
+    if (ovenType === 'fan') totalMins = Math.round(totalMins * 0.9);
+
+    let displayTemp = meat.temp;
+    if (ovenType === 'fan') displayTemp = meat.temp - 20;
+
+    document.getElementById('res-time').textContent = formatTime(totalMins);
+    document.getElementById('res-temp').innerHTML = displayTemp + '<span class="unit">°C</span>';
+    document.getElementById('res-temp-detail').textContent = ovenType === 'fan' ? 'fan oven' : 'gas mark ' + meat.gas;
+    document.getElementById('res-rest').innerHTML = meat.rest + '<span class="unit">min</span>';
+    document.getElementById('tip-text').textContent = meat.tip;
+}
+
+calculate();
+</script>
+
+</body>
+</html>
