@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3836314846497472"
-     crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turkey Cooking Time Calculator — Roast Beef, Chicken, Lamb, Pork & Gammon</title>
     <meta name="description" content="Calculate exact cooking times for any roast. Turkey cooking time, roast beef cooking time, leg of lamb, chicken, pork and gammon — by weight, with rest times and oven temperatures.">
     <meta name="keywords" content="turkey cooking time, roast beef cooking time, leg of lamb cooking time, turkey crown cooking time, roast chicken cooking time, roast pork cooking time, roast lamb cooking time, gammon cooking time, beef cooking times, chicken cooking time, cooking time for a roast beef, roast cooking time calculator, roast beef cooking time calculator">
-    <link rel="canonical" href="">
+    <link rel="canonical" href="https://roasttime.com/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -46,6 +44,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
         }
         nav .brand {
             font-size: 15px;
@@ -54,6 +54,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
+            color: var(--text);
         }
         nav .brand-mark {
             width: 22px;
@@ -72,6 +74,10 @@
             color: var(--text-muted);
             font-weight: 500;
         }
+        nav .nav-links { display: flex; gap: 24px; align-items: center; }
+        nav .nav-link { font-size: 13px; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+        nav .nav-link:hover { color: var(--text); }
+        nav .nav-link.active { color: var(--accent); font-weight: 600; }
 
         .ad-slot {
             display: none;
@@ -478,11 +484,16 @@
 <body>
 
 <nav>
-    <span class="brand">
+    <a href="/" class="brand">
         <span class="brand-mark">🍗</span>
         RoastTime
-    </span>
-    <span class="meta">Cooking Time Calculator</span>
+    </a>
+    <div class="nav-links">
+        <a href="/" class="nav-link active">Calculator</a>
+        <a href="/about.html" class="nav-link">About</a>
+        <a href="/contact.html" class="nav-link">Contact</a>
+        <a href="/privacy.html" class="nav-link">Privacy</a>
+    </div>
 </nav>
 
 <div class="ad-slot"><div class="ad-slot-inner">Ad Space</div></div>
@@ -665,7 +676,15 @@
 
 <div class="ad-slot" style="margin-bottom:16px;"><div class="ad-slot-inner">Ad Space</div></div>
 
-<footer>&copy; 2026 RoastTime · Free roast cooking time calculator</footer>
+<footer>
+    <div style="margin-bottom: 12px;">
+        <a href="/" style="color: var(--text-muted); margin: 0 12px; text-decoration: none;">Calculator</a>
+        <a href="/about.html" style="color: var(--text-muted); margin: 0 12px; text-decoration: none;">About</a>
+        <a href="/contact.html" style="color: var(--text-muted); margin: 0 12px; text-decoration: none;">Contact</a>
+        <a href="/privacy.html" style="color: var(--text-muted); margin: 0 12px; text-decoration: none;">Privacy</a>
+    </div>
+    &copy; 2026 RoastTime · Free roast cooking time calculator
+</footer>
 
 <script>
 const MEATS = {
